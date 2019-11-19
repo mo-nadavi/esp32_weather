@@ -9,14 +9,12 @@ MiUI miui = MiUI();
 const char* ssid = WIFI_SSID;
 const char* passwd = WIFI_PASSWD;
 
-// WebServer server(80);
-
 void setup() {
   Serial.begin(115200);
 
   pinMode(BTN_LED, OUTPUT);
 
-  
+  miui.up(ssid, passwd, MODE_STA);
 }
 
 void loop() {

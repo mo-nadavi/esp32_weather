@@ -3,20 +3,20 @@
 
 #include <Arduino.h>
 
+#define MODE_AP "AP"
+#define MODE_STA "STA"
+
 class MiUI
 {
     public:
         // construct
         MiUI();
         void led(uint8_t pin);
-        void up(char* ssid, char* passwd);
+        void up(const char* ssid, const char* passwd, char* mode);
 
     private:
-        const char* _ssid;
-        const char* _passwd;
-
-        void mode_ap();
-        void mode_sta();
+        void mode_ap(const char* ssid, const char* passwd);
+        void mode_sta(const char* ssid, const char* passwd);
 };
 
 #endif
