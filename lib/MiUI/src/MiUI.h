@@ -16,6 +16,7 @@
 #include <WebServer.h>
 #include "mi_config.h"
 #include "mi_wifi.h"
+#include "mi_server.h"
 
 class MiUI
 {
@@ -27,6 +28,7 @@ class MiUI
 
     private:
         MiWiFi mi_wifi;
+        MiServer mi_server;
 };
 
 #endif

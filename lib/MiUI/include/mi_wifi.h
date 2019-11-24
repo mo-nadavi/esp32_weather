@@ -7,7 +7,12 @@
 #include <WiFi.h>
 #endif
 
-#define A_AP 10000
+#ifndef LED_BUILTIN
+#define LED_BUILTIN 2
+#endif
+
+#define TIME_CONNECT 3000
+#define MAX_CNT_TRY 5
 
 class MiWiFi
 {
