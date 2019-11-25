@@ -25,6 +25,7 @@ class MiUI
         MiUI();
         void led(uint8_t pin);
         void up(const char* ssid, const char* passwd, uint8_t wifi_mode);
+        void page(const char* page_name);
 
     private:
         MiWiFi mi_wifi;

@@ -1,3 +1,3 @@
 // WiFi auth parameters
-#define WIFI_SSID "Mistim_2G";
-#define WIFI_PASSWD "231401M7#m7!";
+#define WIFI_SSID "Nadavi Managers";
+#define WIFI_PASSWD "Pq8G&gC6#*";
