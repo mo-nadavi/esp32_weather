@@ -51,7 +51,7 @@ The content `<div>` is where all your content goes.
      margin: 0;
      color: #333;
      text-align: center;
-     padding: 2.5em 2em 0;
+     padding: 1em 2em;
      border-bottom: 1px solid #eee;
  }
     .header h1 {
@@ -278,3 +278,20 @@ Hides the menu at `48em`, but modify this based on your app's needs.
         margin-top: 0;
         margin-bottom: 0;
     }
+
+
+/* sticky footer */
+html { height: 100%; }
+body, #layout {
+    height: 100%;
+}
+#main {
+    min-height:100%; 
+    position:relative;
+}
+.footer { 
+    position: absolute; 
+    left: 0;
+    right: 0;
+    bottom: 0;
+}

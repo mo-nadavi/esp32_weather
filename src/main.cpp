@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include <_secrets.h>
+#include <_secret.h>
 #include <MiUI.h>
 
 MiUI miui = MiUI();
