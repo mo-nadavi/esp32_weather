@@ -42,28 +42,28 @@ void MiServer::run()
   });
 
   // URL для файла «style.css»:
-  server.on("/pure-min.css", HTTP_GET, [](AsyncWebServerRequest *request){
+  server.on("/pure-min.css", HTTP_ANY, [](AsyncWebServerRequest *request){
     AsyncWebServerResponse *response = request->beginResponse(SPIFFS, "/pure-min.css.gz", "text/css");
     response->addHeader("Content-Encoding", "gzip");
     request->send(response);
   });
 
   // URL для файла «style.css»:
-  server.on("/grids-responsive-min.css", HTTP_GET, [](AsyncWebServerRequest *request){
-    AsyncWebServerResponse *response = request->beginResponse(SPIFFS, "/grids-responsive-min.gz", "text/css");
+  server.on("/grids-responsive-min.css", HTTP_ANY, [](AsyncWebServerRequest *request){
+    AsyncWebServerResponse *response = request->beginResponse(SPIFFS, "/grids-responsive-min.css.gz", "text/css");
     response->addHeader("Content-Encoding", "gzip");
     request->send(response);
   });
 
   // URL для файла «style.css»:
-  server.on("/side-menu.css", HTTP_GET, [](AsyncWebServerRequest *request){
+  server.on("/side-menu.css", HTTP_ANY, [](AsyncWebServerRequest *request){
     AsyncWebServerResponse *response = request->beginResponse(SPIFFS, "/side-menu.css.gz", "text/css");
     response->addHeader("Content-Encoding", "gzip");
     request->send(response);
   });
 
   // URL для файла ui.js:
-  server.on("/ui.js", HTTP_GET, [](AsyncWebServerRequest *request){
+  server.on("/ui.js", HTTP_ANY, [](AsyncWebServerRequest *request){
     AsyncWebServerResponse *response = request->beginResponse(SPIFFS, "/ui.js.gz", "application/javascript");
     response->addHeader("Content-Encoding", "gzip");
     request->send(response);
