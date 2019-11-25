@@ -5,3 +5,4 @@
 .vscode/ipch
 
 /include/_secrets.h
+include/_secrets.h
