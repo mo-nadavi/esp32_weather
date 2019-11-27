@@ -14,6 +14,7 @@
 // #include <ESPAsyncWebServer.h>
 #include "ArduinoJson.h"
 #include <WebServer.h>
+#include "ArduinoJson.h"
 #include "mi_config.h"
 #include "mi_wifi.h"
 #include "mi_server.h"
@@ -24,6 +25,7 @@ class MiUI
         // construct
         MiUI();
         void led(uint8_t pin);
+        void var(String key, String value);
         void up(const char* ssid, const char* passwd, uint8_t wifi_mode);
         void page(const char* page_name);
 
