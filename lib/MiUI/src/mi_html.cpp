@@ -1,11 +1,11 @@
-#include "mi_html.h"
+#include "MiUI.h"
 
-void MiHtml::app(String name)
+void MiUI::app_name(String name)
 {
     buf = "{\"app\":\"" + name + "\",";
 }
 
-void MiHtml::text(String id, String label)
+void MiUI::text(String id, String label)
 {
     buf += "{\"html\":\"input\",";
     buf += "\"id\":\"" + id + "\",";
@@ -15,7 +15,7 @@ void MiHtml::text(String id, String label)
     buf += "},";
 }
 
-void MiHtml::number(String id, String label)
+void MiUI::number(String id, String label)
 {
     buf += "{\"html\":\"input\",";
     buf += "\"id\":\"" + id + "\",";
@@ -25,7 +25,7 @@ void MiHtml::number(String id, String label)
     buf += "},";
 }
 
-void MiHtml::time(String id, String label)
+void MiUI::time(String id, String label)
 {
     buf += "{\"html\":\"input\",";
     buf += "\"id\":\"" + id + "\",";
@@ -35,7 +35,7 @@ void MiHtml::time(String id, String label)
     buf += "},";
 }
 
-void MiHtml::range(String id, int min, int max, float step, String label)
+void MiUI::range(String id, int min, int max, float step, String label)
 {
     buf += "{\"html\":\"input\",";
     buf += "\"id\":\"" + id + "\",";
@@ -48,7 +48,7 @@ void MiHtml::range(String id, int min, int max, float step, String label)
     buf += "},";
 }
 
-void MiHtml::email(String id, String label)
+void MiUI::email(String id, String label)
 {
     buf += "{\"html\":\"input\",";
     buf += "\"id\":\"" + id + "\",";
@@ -58,7 +58,7 @@ void MiHtml::email(String id, String label)
     buf += "},";
 }
 
-void MiHtml::password(String id, String label)
+void MiUI::password(String id, String label)
 {
     buf += "{\"html\":\"input\",";
     buf += "\"id\":\"" + id + "\",";
@@ -68,12 +68,12 @@ void MiHtml::password(String id, String label)
     buf += "},";
 }
 
-void MiHtml::option(String value, String label)
+void MiUI::option(String value, String label)
 {
     op += "{\"label\":\"" + label + "\",\"value\":\"" + value + "\"},";
 }
 
-void MiHtml::select(String id, String label)
+void MiUI::select(String id, String label)
 {
     int lastIndex = op.length() - 1;
     op.remove(lastIndex);
@@ -87,7 +87,7 @@ void MiHtml::select(String id, String label)
     op = "";
 }
 
-void MiHtml::checkbox(String id, String label)
+void MiUI::checkbox(String id, String label)
 {
     buf += "{\"html\":\"input\",";
     buf += "\"type\":\"checkbox\",";
@@ -97,7 +97,16 @@ void MiHtml::checkbox(String id, String label)
     buf += "},";
 }
 
-void MiHtml::color(String id, String label)
+void MiUI::radio(String id, String value)
+{
+    buf += "{\"html\":\"input\",";
+    buf += "\"id\":\"" + id + "\",";
+    buf += "\"type\":\"radio\",";
+    buf += "\"value\":\"" + value + "\",";
+    buf += "},";
+}
+
+void MiUI::color(String id, String label)
 {
     buf += "{\"html\":\"input\",";
     buf += "\"id\":\"" + id + "\",";
@@ -107,7 +116,7 @@ void MiHtml::color(String id, String label)
     buf += "},";
 }
 
-void MiHtml::button(String id, String color, String label)
+void MiUI::button(String id, String color, String label)
 {
     buf += "{\"html\":\"button\",";
     buf += "\"id\":\"" + id + "\",";
@@ -116,7 +125,7 @@ void MiHtml::button(String id, String color, String label)
     buf += "},";
 }
 
-void MiHtml::textarea(String id, String label)
+void MiUI::textarea(String id, String label)
 {
     buf += "{\"html\":\"textarea\",";
     buf += "\"id\":\"" + id + "\",";
@@ -126,8 +135,41 @@ void MiHtml::textarea(String id, String label)
     buf += "},";
 }
 
-void MiHtml::menu(String name)
-{    
+void MiUI::text_block(String text, String tag)
+{
+    buf += "{\"html\":\"text_block\",";
+    buf += "\"tag\":\"" + tag + "\",";
+    buf += "\"text\":\"" + text + "\"";
+    buf += "},";
+}
+
+void MiUI::list_item(String text)
+{
+    op += "{\"text\":\"" + text + "\"},";
+}
+
+void MiUI::list(String tag)
+{
+    int lastIndex = op.length() - 1;
+    op.remove(lastIndex);
+
+    buf += "{\"html\":\"list\",";
+    buf += "\"tag\":\"" + tag + "\",";
+    buf += "\"list\":[" + op + "]";
+    buf += "},";
+    op = "";
+}
+
+void MiUI::hr(String text, String direction)
+{
+    buf += "{\"html\":\"hr\",";
+    buf += "\"direction\":\"" + direction + "\",";
+    buf += "\"text\":\"" + text + "\"";
+    buf += "},";
+}
+
+void MiUI::menu(String route, String name)
+{
     if (mn == 0) {
         buf += "\"menu\":[";
     } else {
@@ -141,24 +183,33 @@ void MiHtml::menu(String name)
     mn++;
 }
 
-void MiHtml::page()
+void MiUI::page()
 {
+    Serial.println(buf);
     if (pg == 0) {
-         buf += "\"content\":[[";
+        buf += "\"content\":[[";
     } else {
         int lastIndex = buf.length() - 1;
-        buf.remove(lastIndex);
+
+        if (buf[lastIndex] == ',') {
+             buf.remove(lastIndex);
+        }
+
         buf += "],[";
     }
 
-    if (pg == mn) {
-        int lastIndex = buf.length() - 1;
-        buf.remove(lastIndex);
-        buf.remove(lastIndex - 1);
-        buf.remove(lastIndex - 2);
-        //buf.remove(lastIndex - 3);
-        buf += "]]}";
-    } else {
+    if (pg != mn) {
         pg++;
     }
+}
+
+void MiUI::end()
+{
+    if (pg) {
+        buf += "]]";
+    }
+
+    buf += "}";
+    pg = 0;
+    mn = 0;
 }

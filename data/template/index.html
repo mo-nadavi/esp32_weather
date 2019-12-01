@@ -1,61 +1,35 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
 <head>
-  <title>ESP32 Web Server</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="/favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" type="text/css" href="/css/pure-min.css">
-  <link rel="stylesheet" type="text/css" href="/css/grids-min.css">
-  <link rel="stylesheet" type="text/css" href="/css/side-menu.css">
-</head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ESP32 Weather Station</title>
+
+    <link rel="stylesheet" href="/css/mg.min.css"></head>
+
 <body>
-  <div id="layout">
-    <a href="#menu" id="menuLink" class="menu-link">
-        <span></span>
-    </a>
-    <div id="menu">
-        <div class="pure-menu">
-            <a class="pure-menu-heading" href="/">Pure</a>
-            <ul class="pure-menu-list">
-                <li class="pure-menu-item pure-menu-selected">
-                    <a href="/#" class="pure-menu-link">Get Started</a>
-                </li>
-                <li class="pure-menu-item">
-                    <a href="/#" class="pure-menu-link">Layouts</a>
-                </li>
-                <li class="pure-menu-item menu-item-divided">
-                    <a href="/#" class="pure-menu-link">Base</a>
-                </li>
-            </ul>
-        </div>
-    </div>
     <div id="main">
-      <div class="header">
-          <h1>ESP32 Wherather</h1>
-      </div>
-      <div class="content">
-        <div class="legal">
-          <h1>ESP32 Web Server</h1>
-          <p>GPIO state: <strong> %STATE%</strong></p>
-          <p><a href="/on"><button class="pure-button pure-button-primary">ON</button></a></p>
-          <p><a href="/off"><button class="pure-button">OFF</button></a></p>
+        <span class="btn-menu">&#9776;</span>
+        <div id="header">
+            <span>ESP32 Weather Station</span>
         </div>
-      </div>
-      <div class="footer">
-        <div class="legal pure-g">
-          <div class="pure-u-1 pure-u-md-1-2">
-            <p class="legal-license">ESP32 Wherather</p>
-          </div>
+        <div id="content">
             
-          <div class="pure-u-1 pure-u-md-1-2">           
-            <p class="legal-copyright">
-              © 2014 - Present Yahoo! Inc. All rights reserved.
-            </p>
-          </div>
-        </div>         
-      </div>
+        </div>
+        <div id="footer">
+            <div class="row">
+                <div class="column">ESP32 Weather Station</div>
+                <div class="column txt-r">By Mystim</div>
+            </div>
+        </div>
     </div>
-  </div>
-  <script src="/js/ui.js"></script>
+    <div id="sidebar">
+        <span class="btn-close">&times;</span>
+        <span class="side-h">
+            Menu        
+        </span>
+    </div>
+    <script src="/js/app.js"></script>
 </body>
 </html>

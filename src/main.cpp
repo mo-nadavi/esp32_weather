@@ -7,16 +7,48 @@ MiUI miui = MiUI();
 const char* ssid = WIFI_SSID;
 const char* passwd = WIFI_PASSWD;
 
+void interface();
+
 void setup() 
 {
   Serial.begin(115200);
 
-  miui.up(ssid, passwd, WIFI_STA);
+  miui.begin();
+  miui.ui(interface);
+  miui.debug();
 }
 
 void loop() 
 {
-  // digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
+  miui.handle();
+}
 
-  // delay(1000);
+void interface()
+{
+  miui.app_name("ESP32");
+  miui.menu("", "Главная");
+  miui.menu("wifi", "WiFi");
+  miui.menu("settings", "Настройки");
+  miui.page();
+  miui.option(String(WIFI_AP), "Точка доступа (AP)");
+  miui.option(String(WIFI_STA), "Клиент (STA)");
+  miui.select("wifi_mode", "Режим WiFi");
+  miui.text("ssid", "SSID WiFi");
+  miui.password("passwd", "Пароль WiFi");
+  miui.text_block("Подключенные сети");
+  // miui.text_block("Доступные сети");
+
+  // int n = WiFi.scanNetworks();
+
+  // if (n) {
+  //   for (int i = 0; i < n; ++i) {
+  //     miui.list_item(WiFi.SSID(i) + "   (" + String(WiFi.RSSI(i)) + " dBm)   " + ((WiFi.encryptionType(i) == WIFI_AUTH_OPEN) ? "" : "<i><b>lock</b></i>"));
+  //   }
+
+  //   miui.list();
+  // }
+
+  miui.page();
+  miui.page();
+  miui.end();
 }
