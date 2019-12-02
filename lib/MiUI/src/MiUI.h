@@ -23,6 +23,7 @@
 class MiUI
 {
     typedef void (*uiCallback) ();
+    typedef void (*buttonCallback) ();
 
     public:
         // construct
@@ -35,6 +36,7 @@ class MiUI
         void debug();
         void ui(void (*uiFunction) ());
         void handle();
+        void btnCallback(String name, buttonCallback response);
         // html
         void app_name(String name);
         void menu(String route, String name);
@@ -84,6 +86,7 @@ class MiUI
         String op = "";
         uint8_t mn = 0;
         uint8_t pg = 0;
+        String btnui = "";
         void server_run();
 };
 

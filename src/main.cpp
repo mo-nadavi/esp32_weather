@@ -13,14 +13,23 @@ void setup()
 {
   Serial.begin(115200);
 
+  miui.var("test_a", "");
+
   miui.begin();
   miui.ui(interface);
   miui.debug();
 }
 
+void btn() {
+  static int cnt;
+  cnt++;
+  Serial.println("Btn " + String(cnt));
+}
+
 void loop() 
 {
   miui.handle();
+  miui.btnCallback("btnTest", btn);
 }
 
 void interface()
@@ -32,15 +41,7 @@ void interface()
   miui.page();
   miui.text_block("Какая то сводная ифва о модуле");
   miui.page();
-  // miui.wifi_settings();
-  miui.text_block("MAC-адрес: " + WiFi.macAddress());
-  miui.hr("");
-  miui.option(String(WIFI_AP), "Точка доступа (AP)");
-  miui.option(String(WIFI_STA), "Клиент (STA)");
-  miui.select("wifi_mode", "Режим WiFi");
-  miui.text("ssid", "SSID WiFi");
-  miui.password("passwd", "Пароль WiFi");
-  miui.button("syster_reload", "", "Перезагрузить");
+  miui.wifi_settings();
   // miui.text_block("Подключенные сети");
   // miui.text_block("Доступные сети");
 
@@ -56,5 +57,7 @@ void interface()
 
   miui.page();
   miui.text_block("Настройки модуля");
+  miui.text("test_a", "Test field");
+  miui.button("btnTest", "", "btn test");
   miui.end();
 }

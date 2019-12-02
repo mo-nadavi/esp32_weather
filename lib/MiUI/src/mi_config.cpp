@@ -48,9 +48,9 @@ void MiUI::conf_autosave()
   if (!do_save) return;
 
   if (do_save && avto_save_timer + asave < millis()){
-      conf_autosave();
+      conf_save();
       do_save = false;
-      // if (dbg) Serial.println("AutoSave");
+      Serial.println("AutoSave");
       
       // upd();
       // mqtt_update();

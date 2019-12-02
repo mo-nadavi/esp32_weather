@@ -71,3 +71,16 @@ void MiUI::handle()
   // led_handle();
   conf_autosave();
 }
+
+void MiUI::btnCallback(String name, buttonCallback response)
+{
+    // if (name == "GPIO0" && !digitalRead(BUTTON)){
+    //     response();
+    //     btn();
+    // }
+
+    if (btnui == name){
+        btnui = "";
+        response();
+    }
+}

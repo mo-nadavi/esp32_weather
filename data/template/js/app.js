@@ -39,6 +39,17 @@ document.addEventListener('DOMContentLoaded', function () {
             };
             xhr.send(null);
         },
+        send: function(id, value) {
+            var formData = new FormData();
+            var xhr = new XMLHttpRequest();
+
+            formData.append(id, value);
+            xhr.open('POST', '/post', true);
+            xhr.onload = function () {
+                var res = xhr.responseText;
+            };
+            xhr.send(formData);
+        },
         menu: function() {
             for (var i = 0; i < cnt_menu; i++) {
                 var menu_item = document.createElement('a');
@@ -104,6 +115,8 @@ document.addEventListener('DOMContentLoaded', function () {
                             var btn = document.createElement("button");
                             btn.setAttribute("type", "button");
                             btn.setAttribute("title", "Применить");
+                            btn.setAttribute("jtype", "click");
+                            btn.setAttribute("jsource", page_content[i]["id"]);
                             btn.innerHTML = "&#10004;"
 
                             wrap.append(field);
@@ -124,6 +137,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         var field = document.createElement(page_content[i]["html"]);
                         field.setAttribute("id", page_content[i]["id"]);
                         field.setAttribute("value", page_content[i]["value"]);
+                        field.setAttribute("jtype", "change");
                         
                         for (var ii = 0; ii < page_content[i]["options"].length; ii++) {
                             var option = document.createElement("option");
@@ -140,6 +154,8 @@ document.addEventListener('DOMContentLoaded', function () {
                         var btn = document.createElement("button");
                         btn.setAttribute("type", "button");
                         btn.setAttribute("id", page_content[i]["id"]);
+                        btn.setAttribute("jtype", "click");
+                        btn.setAttribute("jvalue", page_content[i]["id"]);
                         btn.className = page_content[i]["style"];
                         btn.innerHTML = page_content[i]["label"];
 
@@ -150,6 +166,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
             form.append(fieldset);
             content.innerHTML = form.outerHTML;
+
+            // if (document.querySelectorAll('[jtype="click"]').length) {
+            //     document.querySelectorAll('[jtype="click"]').addEventListener("click", eventHandlers.send);
+            // }
+            
+            // if (document.querySelectorAll('[jtype="change"]').length) {
+            //     document.querySelectorAll('[jtype="change"]').addEventListener("change", eventHandlers.send);
+            // }
         },
         notFound: function() {
             var not_found = document.createElement('div');
@@ -193,6 +217,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
             sidebar.style.left = sidebarLeft;
             actions.content();
+        },
+        send: function(e) {
+            e.preventDefault();
+
+            var el = e.target;
+            var id;
+            var value;
+            
+            if (el.getAttribute("jsource")) id = el.getAttribute("jsource");
+            else el.getAttribute("id");
+
+            if (el.getAttribute("jvalue")) value = el.getAttribute("jvalue");
+            else value = document.getElementById(id).getAttribute("val");
+
+            actions.send(id, value);
         }
     };
 

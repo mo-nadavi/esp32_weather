@@ -172,14 +172,14 @@ void MiUI::hr(String text, String direction)
 
 void MiUI::wifi_settings()
 {
-    // text_block("MAC-адрес: " + WiFi.macAddress());
-    // hr("");
-    // option(String(WIFI_AP), "Точка доступа (AP)");
-    // option(String(WIFI_STA), "Клиент (STA)");
-    // select("wifi_mode", "Режим WiFi");
-    // text("ssid", "SSID WiFi");
-    // password("passwd", "Пароль WiFi");
-    // button("syster_reload", "", "Перезагрузить");
+    text_block("MAC-адрес: " + WiFi.macAddress());
+    hr("");
+    option(String(WIFI_AP), "Точка доступа (AP)");
+    option(String(WIFI_STA), "Клиент (STA)");
+    select("wifi_mode", "Режим WiFi");
+    text("ssid", "SSID WiFi");
+    password("passwd", "Пароль WiFi");
+    button("syster_reload", "", "Перезагрузить");
 }
 
 void MiUI::menu(String route, String name)

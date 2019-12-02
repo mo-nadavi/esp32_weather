@@ -93,7 +93,7 @@ void MiUI::server_run()
       param = request->getParam(i);
 
       if (param->name().indexOf("BTN_") != -1) {
-        // btnui = param->name().substring(4, param->name().length());
+        btnui = param->name().substring(4, param->name().length());
       } else {
         var(param->name(), param->value());
         conf_as();
