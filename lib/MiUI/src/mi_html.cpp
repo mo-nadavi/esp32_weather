@@ -116,10 +116,12 @@ void MiUI::color(String id, String label)
     buf += "},";
 }
 
-void MiUI::button(String id, String color, String label)
+void MiUI::button(String id, String color, String label, String style)
 {
     buf += "{\"html\":\"button\",";
+    buf += "\"type\":\"button\",";
     buf += "\"id\":\"" + id + "\",";
+    buf += "\"style\":\"" + style + "\",";
     buf += "\"color\":\"" + color + "\",";
     buf += "\"label\":\"" + label + "\"";
     buf += "},";
@@ -168,6 +170,18 @@ void MiUI::hr(String text, String direction)
     buf += "},";
 }
 
+void MiUI::wifi_settings()
+{
+    // text_block("MAC-адрес: " + WiFi.macAddress());
+    // hr("");
+    // option(String(WIFI_AP), "Точка доступа (AP)");
+    // option(String(WIFI_STA), "Клиент (STA)");
+    // select("wifi_mode", "Режим WiFi");
+    // text("ssid", "SSID WiFi");
+    // password("passwd", "Пароль WiFi");
+    // button("syster_reload", "", "Перезагрузить");
+}
+
 void MiUI::menu(String route, String name)
 {
     if (mn == 0) {
@@ -185,7 +199,6 @@ void MiUI::menu(String route, String name)
 
 void MiUI::page()
 {
-    Serial.println(buf);
     if (pg == 0) {
         buf += "\"content\":[[";
     } else {
@@ -205,6 +218,12 @@ void MiUI::page()
 
 void MiUI::end()
 {
+    int lastIndex = buf.length() - 1;
+
+    if (buf[lastIndex] == ',') {
+            buf.remove(lastIndex);
+    }
+
     if (pg) {
         buf += "]]";
     }
@@ -212,4 +231,6 @@ void MiUI::end()
     buf += "}";
     pg = 0;
     mn = 0;
+
+    Serial.println(buf);
 }

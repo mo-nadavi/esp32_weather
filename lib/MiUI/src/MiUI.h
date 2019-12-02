@@ -50,12 +50,13 @@ class MiUI
         void checkbox(String id, String label);
         void radio(String id, String value);
         void color(String id, String label);
-        void button(String id, String color, String label);
+        void button(String id, String color, String label, String = BTN_DEFAULT);
         void textarea(String id, String label);
         void text_block(String text, String tag = "p");
         void list_item(String text);
         void list(String tag = "ul");
         void hr(String text, String direction = "left");
+        void wifi_settings();
         void end();
 
     private:

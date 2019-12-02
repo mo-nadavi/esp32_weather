@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         field.setAttribute("id", page_content[i]["id"]);
                         field.setAttribute("value", page_content[i]["value"]);
 
-                        if (page_content[i]["type"] == "text" || page_content[i]["type"] == "textarea") {
+                        if (["text", "textarea", "password"].indexOf(page_content[i]["type"]) !== -1) {
                             var wrap = document.createElement("div");
                             wrap.className = "input-group";
 
@@ -106,8 +106,8 @@ document.addEventListener('DOMContentLoaded', function () {
                             btn.setAttribute("title", "Применить");
                             btn.innerHTML = "&#10004;"
 
-                            wrap.append(btn);
                             wrap.append(field);
+                            wrap.append(btn);
 
                             field = wrap;
                         }
@@ -134,6 +134,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
                         fieldset.append(label);
                         fieldset.append(field);
+                    break;
+
+                    case "button":
+                        var btn = document.createElement("button");
+                        btn.setAttribute("type", "button");
+                        btn.setAttribute("id", page_content[i]["id"]);
+                        btn.className = page_content[i]["style"];
+                        btn.innerHTML = page_content[i]["label"];
+
+                        fieldset.append(btn);
                     break;
                 }
             }
