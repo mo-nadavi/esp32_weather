@@ -69,5 +69,5 @@ void MiUI::handle()
 
   // btn();
   // led_handle();
-  // autosave();
+  conf_autosave();
 }

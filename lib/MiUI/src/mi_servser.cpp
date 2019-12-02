@@ -96,14 +96,14 @@ void MiUI::server_run()
         // btnui = param->name().substring(4, param->name().length());
       } else {
         var(param->name(), param->value());
-        // conf_as();
+        conf_as();
       }
     }
     
     request->send(200, F("text/plain"), F("OK"));
   });
 
-  server.on("/echo", HTTP_ANY, [this](AsyncWebServerRequest *request) { 
+  server.on("/load", HTTP_ANY, [this](AsyncWebServerRequest *request) { 
     processor();
     request->send(200, "text/plain", buf);
     buf = "";

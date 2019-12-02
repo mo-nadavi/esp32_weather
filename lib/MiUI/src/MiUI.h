@@ -60,11 +60,13 @@ class MiUI
 
     private:
         // config
-        bool sv = false;
-        unsigned long astimer;
+        bool do_save = false;
+        unsigned long avto_save_timer;
+        unsigned int asave = 1000; // ?
         String config = "{}";
         void conf_load();
         void conf_save();
+        void conf_autosave();
         void conf_as();
         void full_reset();
         // wifi

@@ -103,7 +103,7 @@ body,
 
 	#content
 		margin: 0 auto
-    	width: 1000px
+		width: 1000px
 	
 	#sidebar
 		left: 0
@@ -117,6 +117,37 @@ body,
 
 	.btn-menu, .btn-close
 		display: none
+
+/* Form */
+.input-group
+	position: relative
+	display: -ms-flexbox
+	display: flex
+	-ms-flex-wrap: wrap
+	flex-wrap: wrap
+	-ms-flex-align: stretch
+	align-items: stretch
+	width: 100%
+
+	input,
+	textarea
+		position: relative
+		-ms-flex: 1 1 auto
+		flex: 1 1 auto
+		// border-radius: .4rem 0 0 .4rem
+		width: 1%
+		resize: vertical
+
+	button
+		display: -ms-flexbox
+		display: flex
+		border: .1rem solid $color-quaternary
+		// border-radius: 0 .4rem .4rem 0
+		margin-left: -1px
+		background-color: $color-quinary
+		padding: 0 1.5rem
+		color: $color-secondary
+		font-size: 1.5rem
 
 /* Utilities */
 .txt-c

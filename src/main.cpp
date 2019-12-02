@@ -42,7 +42,7 @@ void interface()
 
   // if (n) {
   //   for (int i = 0; i < n; ++i) {
-  //     miui.list_item(WiFi.SSID(i) + "   (" + String(WiFi.RSSI(i)) + " dBm)   " + ((WiFi.encryptionType(i) == WIFI_AUTH_OPEN) ? "" : "<i><b>lock</b></i>"));
+  //     miui.list_item(WiFi.SSID(i) + "   (" + String(WiFi.RSSI(i)) + " dBm)   " + ((WiFi.encryptionType(i) == WIFI_AUTH_OPEN) ? "" : "&#128274;"));
   //   }
 
   //   miui.list();

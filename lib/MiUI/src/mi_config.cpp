@@ -43,9 +43,23 @@ void MiUI::conf_save()
   Serial.println(F("Save Config"));
 }
 
+void MiUI::conf_autosave()
+{    
+  if (!do_save) return;
+
+  if (do_save && avto_save_timer + asave < millis()){
+      conf_autosave();
+      do_save = false;
+      // if (dbg) Serial.println("AutoSave");
+      
+      // upd();
+      // mqtt_update();
+  } 
+}
+
 void MiUI::conf_as(){
-  sv = true;
-  astimer = millis();
+  do_save = true;
+  avto_save_timer = millis();
 }
 
 void MiUI::full_reset()

@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
             var hash = decodeURI(window.location.hash.substr(1));
             var xhr = new XMLHttpRequest();
 
-            xhr.open('GET', '/echo', true);
+            xhr.open('GET', '/load', true);
             xhr.onload = function () {
                 json = xhr.responseText;
                 obj = JSON.parse(json);
@@ -96,6 +96,21 @@ document.addEventListener('DOMContentLoaded', function () {
                         field.setAttribute("type", page_content[i]["type"]);
                         field.setAttribute("id", page_content[i]["id"]);
                         field.setAttribute("value", page_content[i]["value"]);
+
+                        if (page_content[i]["type"] == "text" || page_content[i]["type"] == "textarea") {
+                            var wrap = document.createElement("div");
+                            wrap.className = "input-group";
+
+                            var btn = document.createElement("button");
+                            btn.setAttribute("type", "button");
+                            btn.setAttribute("title", "Применить");
+                            btn.innerHTML = "&#10004;"
+
+                            wrap.append(btn);
+                            wrap.append(field);
+
+                            field = wrap;
+                        }
                         
                         fieldset.append(label);
                         fieldset.append(field);
