@@ -167,13 +167,26 @@ document.addEventListener('DOMContentLoaded', function () {
             form.append(fieldset);
             content.innerHTML = form.outerHTML;
 
-            // if (document.querySelectorAll('[jtype="click"]').length) {
-            //     document.querySelectorAll('[jtype="click"]').addEventListener("click", eventHandlers.send);
-            // }
+            if (document.querySelectorAll('[jtype="click"]').length) {
+                // document.querySelectorAll('[jtype="click"]').addEventListener("click", eventHandlers.send);
+                // [].forEach.call(
+                //     document.querySelectorAll('[jtype="click"]'), function (el) { 
+                //         el.addEventListener('event', console.log(123), false);
+                //     }
+                // );
+
+                document.querySelectorAll('[jtype="click"]').forEach(function(el) {
+                    el.addEventListener('click', eventHandlers.send);
+                });
+            }
             
-            // if (document.querySelectorAll('[jtype="change"]').length) {
-            //     document.querySelectorAll('[jtype="change"]').addEventListener("change", eventHandlers.send);
-            // }
+            if (document.querySelectorAll('[jtype="change"]').length) {
+                // document.querySelectorAll('[jtype="change"]').addEventListener("change", eventHandlers.send);
+
+                document.querySelectorAll('[jtype="change"]').forEach(function(el) {
+                    el.addEventListener('change', eventHandlers.send);
+                });
+            }
         },
         notFound: function() {
             var not_found = document.createElement('div');
@@ -226,10 +239,10 @@ document.addEventListener('DOMContentLoaded', function () {
             var value;
             
             if (el.getAttribute("jsource")) id = el.getAttribute("jsource");
-            else el.getAttribute("id");
+            else id = el.getAttribute("id");
 
             if (el.getAttribute("jvalue")) value = el.getAttribute("jvalue");
-            else value = document.getElementById(id).getAttribute("val");
+            else value = document.getElementById(id).value;
 
             actions.send(id, value);
         }

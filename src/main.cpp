@@ -14,6 +14,9 @@ void setup()
   Serial.begin(115200);
 
   miui.var("test_a", "");
+  miui.var("ssid", ssid);
+  miui.var("passwd", passwd);
+  miui.var("wifi_mode", String(WIFI_STA));
 
   miui.begin();
   miui.ui(interface);
@@ -29,7 +32,7 @@ void btn() {
 void loop() 
 {
   miui.handle();
-  miui.btnCallback("btnTest", btn);
+  miui.btnCallback("BTN_Test", btn);
 }
 
 void interface()
@@ -58,6 +61,6 @@ void interface()
   miui.page();
   miui.text_block("Настройки модуля");
   miui.text("test_a", "Test field");
-  miui.button("btnTest", "", "btn test");
+  miui.button("BTN_Test", "", "btn test");
   miui.end();
 }

@@ -89,8 +89,12 @@ void MiUI::server_run()
     uint8_t params = request->params();
     AsyncWebParameter *param;
 
+    Serial.println(params);
+
     for (uint8_t i = 0; i < params; i++) {
       param = request->getParam(i);
+
+      Serial.println(param->name());
 
       if (param->name().indexOf("BTN_") != -1) {
         btnui = param->name().substring(4, param->name().length());

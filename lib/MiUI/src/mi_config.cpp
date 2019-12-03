@@ -14,13 +14,13 @@ void MiUI::conf_load()
   
   if (pre_configFile.readString() == "") {
       Serial.println(F("Failed to open config file"));
+      conf_save();
       // default params
       var("wifi_mode", String(WIFI_AP));
       var("ssid", String(ssid_ap));
       var("passwd", String(ssid_ap));
       var("wifi_cnt", "0");
       // create file
-      conf_save();
 
       return;
   }
