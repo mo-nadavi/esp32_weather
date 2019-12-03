@@ -74,6 +74,10 @@ document.addEventListener('DOMContentLoaded', function () {
             var fieldset = document.createElement("fieldset");
 
             for (var i = 0; i < page_content.length; i++) {
+                if (page_content[i]["value"] != undefined && page_content[i]["value"] == "null") {
+                    page_content[i]["value"] = "";
+                }
+
                 switch (page_content[i]["html"]) {
                     case "hr":
                         var el = document.createElement("hr");
@@ -143,6 +147,11 @@ document.addEventListener('DOMContentLoaded', function () {
                             var option = document.createElement("option");
                             option.innerText = page_content[i]["options"][ii]["label"];
                             option.setAttribute("value", page_content[i]["options"][ii]["value"]);
+
+                            if (page_content[i]["value"] == page_content[i]["options"][ii]["value"]) {
+                                option.setAttribute("selected", true);
+                            }
+
                             field.append(option);
                         }
 
@@ -153,7 +162,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     case "button":
                         var btn = document.createElement("button");
                         btn.setAttribute("type", "button");
-                        btn.setAttribute("id", page_content[i]["id"]);
+                        btn.setAttribute("id", "BTN_" + page_content[i]["id"]);
                         btn.setAttribute("jtype", "click");
                         btn.setAttribute("jvalue", page_content[i]["id"]);
                         btn.className = page_content[i]["style"];
@@ -166,23 +175,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
             form.append(fieldset);
             content.innerHTML = form.outerHTML;
+            // todo
+            form.addEventListener("submit", eventHandlers.form);
 
             if (document.querySelectorAll('[jtype="click"]').length) {
-                // document.querySelectorAll('[jtype="click"]').addEventListener("click", eventHandlers.send);
-                // [].forEach.call(
-                //     document.querySelectorAll('[jtype="click"]'), function (el) { 
-                //         el.addEventListener('event', console.log(123), false);
-                //     }
-                // );
-
                 document.querySelectorAll('[jtype="click"]').forEach(function(el) {
                     el.addEventListener('click', eventHandlers.send);
                 });
             }
             
             if (document.querySelectorAll('[jtype="change"]').length) {
-                // document.querySelectorAll('[jtype="change"]').addEventListener("change", eventHandlers.send);
-
                 document.querySelectorAll('[jtype="change"]').forEach(function(el) {
                     el.addEventListener('change', eventHandlers.send);
                 });
@@ -245,6 +247,9 @@ document.addEventListener('DOMContentLoaded', function () {
             else value = document.getElementById(id).value;
 
             actions.send(id, value);
+        },
+        form: function(e) {
+            e.preventDefault();
         }
     };
 

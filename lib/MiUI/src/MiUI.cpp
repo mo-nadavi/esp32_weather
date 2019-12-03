@@ -25,10 +25,6 @@ String MiUI::param(String key)
 
 void MiUI::var(String key, String value) 
 { 
-  if (config == "{}") {
-    conf_load();
-  }
-
   DynamicJsonDocument doc(10000);
   String result;
   deserializeJson(doc, config);
@@ -47,14 +43,17 @@ void MiUI::debug()
   Serial.println("RAM: " + String(ESP.getFreeHeap()));
 }
 
+// void MiUI::init()
+// {
+//   conf_load();
+// }
+
 void MiUI::begin()
 {
   // full_reset();
   
-  if (config == "{}") {
-    conf_load();
-  }
-
+  conf_load();
+  non_wifi_var();
   wifi_connect();
   server_run();
 }
@@ -86,9 +85,8 @@ void MiUI::btnCallback(String name, buttonCallback response)
   //     response();
   //     btn();
   // }
-
+  
   if (btnui == name) {
-    Serial.println(btnui);
     btnui = "";
     response();
   }

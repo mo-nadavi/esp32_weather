@@ -32,6 +32,7 @@ class MiUI
         uiCallback processor;
         void led(uint8_t pin);
         void var(String key, String value);
+        // void init();
         void begin();
         void debug();
         void ui(void (*uiFunction) ());
@@ -71,6 +72,7 @@ class MiUI
         void conf_save();
         void conf_autosave();
         void conf_as();
+        void non_wifi_var();
         void full_reset();
         // wifi
         String ssid;

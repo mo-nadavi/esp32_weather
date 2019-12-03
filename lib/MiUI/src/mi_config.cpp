@@ -14,13 +14,13 @@ void MiUI::conf_load()
   
   if (pre_configFile.readString() == "") {
       Serial.println(F("Failed to open config file"));
-      conf_save();
       // default params
-      var("wifi_mode", String(WIFI_AP));
-      var("ssid", String(ssid_ap));
-      var("passwd", String(ssid_ap));
-      var("wifi_cnt", "0");
+      // var("wifi_mode", String(WIFI_AP));
+      // var("ssid", String(ssid_ap));
+      // var("passwd", String(ssid_ap));
+      // var("wifi_cnt", "0");
       // create file
+      conf_save();
 
       return;
   }
@@ -47,7 +47,7 @@ void MiUI::conf_autosave()
 {    
   if (!do_save) return;
 
-  if (do_save && avto_save_timer + asave < millis()){
+  if (do_save && avto_save_timer + asave < millis()) {
       conf_save();
       do_save = false;
       Serial.println("AutoSave");
@@ -60,6 +60,17 @@ void MiUI::conf_autosave()
 void MiUI::conf_as(){
   do_save = true;
   avto_save_timer = millis();
+}
+
+void MiUI::non_wifi_var()
+{
+    String wifi_mode = param("wifi_mode");
+    String ssid = param("ssid");
+    String passwd = param("passwd");
+
+    if(wifi_mode == "null") var("wifi_mode", String(WIFI_AP));
+    if(ssid == "null") var("ssid", String(ssid_ap));
+    if(passwd == "null") var("passwd", String(ssid_ap));
 }
 
 void MiUI::full_reset()

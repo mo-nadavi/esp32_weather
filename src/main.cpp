@@ -13,6 +13,8 @@ void setup()
 {
   Serial.begin(115200);
 
+  // miui.init();
+
   miui.var("test_a", "");
   miui.var("ssid", ssid);
   miui.var("passwd", passwd);
@@ -26,13 +28,14 @@ void setup()
 void btn() {
   static int cnt;
   cnt++;
+  digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
   Serial.println("Btn " + String(cnt));
 }
 
 void loop() 
 {
   miui.handle();
-  miui.btnCallback("BTN_Test", btn);
+  miui.btnCallback("btnTest", btn);
 }
 
 void interface()
@@ -61,6 +64,6 @@ void interface()
   miui.page();
   miui.text_block("Настройки модуля");
   miui.text("test_a", "Test field");
-  miui.button("BTN_Test", "", "btn test");
+  miui.button("btnTest", "", "btn test");
   miui.end();
 }
