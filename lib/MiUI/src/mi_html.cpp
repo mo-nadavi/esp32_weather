@@ -5,6 +5,11 @@ void MiUI::app_name(String name)
     buf = "{\"app\":\"" + name + "\",";
 }
 
+void MiUI::app_by(String text)
+{
+    buf = "{\"by\":\"" + text + "\",";
+}
+
 void MiUI::text(String id, String label)
 {
     buf += "{\"html\":\"input\",";

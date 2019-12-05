@@ -1,4 +1,4 @@
-$color_initial: 1px solid #eee
+$color_initial: 1px solid #d8dbe0
 
 html
 	height: 100%
@@ -9,6 +9,9 @@ body,
 	margin: 0
 	height: 100%
 
+body 
+	background-color: #ebedef
+
 #main
 	display: flex
 	flex-direction: column
@@ -18,19 +21,31 @@ body,
 	margin: 0
 	color: #333
 	text-align: center
-	padding: 1em 2em
+	padding: 2rem
+	// border-bottom: $color_initial
+	box-shadow: 0 2px 2px 0 rgba(60,75,100,.14), 0 3px 1px -2px rgba(60,75,100,.12), 0 1px 5px 0 rgba(60,75,100,.2)
+	font-size: 2rem
+	background-color: #fff
+
+#subheader
+	border-top: $color_initial
 	border-bottom: $color_initial
-	font-size: 2em
+	background-color: #fff
+	font-size: 1.5rem
+	padding: .5rem 2rem
 
 #content
 	padding: 20px
+	margin: 0
 	display: flex
 	flex-direction: column
 	flex-grow: 1
+	box-shadow: 0 1px 1px 0 rgba(60,75,100,.14), 0 2px 1px -1px rgba(60,75,100,.12), 0 1px 3px 0 rgba(60,75,100,.2)
+	background-color: #fff
 
 #footer
 	border-top: $color_initial
-	padding: 20px
+	padding: 2rem
 	background: rgb(250, 250, 250)
 	display: flex
 	flex: 0 0 50px
@@ -93,7 +108,7 @@ body,
 
 .btn-menu
 	position: absolute
-	top: 20px
+	top: 23px
 	left: 20px
 	font-size: 120%
 	font-weight: bold
@@ -103,20 +118,24 @@ body,
 	#main
 		margin-left: 250px
 
+	// #header
+
+	#subheader
+		display: none
+
 	#content
-		margin: 0 auto
+		margin: 20px auto
 		width: 1000px
 	
 	#sidebar
 		left: 0
 
 	#footer 
-		.column
-			:first-child
-				text-align: left
+		.column:first-child
+			text-align: left
 
-			:last-child
-				text-align: right
+		.column:last-child
+			text-align: right
 
 	.btn-menu, 
 	.btn-close

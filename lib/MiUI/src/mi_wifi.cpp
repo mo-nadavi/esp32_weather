@@ -2,9 +2,9 @@
 
 int wifi_status = WL_IDLE_STATUS; 
 
-IPAddress local_ip(192,168,1,1);
-IPAddress gateway(192,168,1,1);
-IPAddress subnet(255,255,255,0);
+// IPAddress local_ip(192,168,1,1);
+// IPAddress gateway(192,168,1,1);
+// IPAddress subnet(255,255,255,0);
 
 void MiUI::wifi_connect() 
 {
@@ -54,11 +54,11 @@ void MiUI::wifi_mode_sta()
       break;
     }
 
-    //connect to your local wi-fi network
+    // connect to your local wi-fi network
     wifi_status = WiFi.begin(ssid.c_str(), passwd.c_str());
     unsigned long interval = millis();
 
-    //check wi-fi is connected to wi-fi network
+    // check wi-fi is connected to wi-fi network
     while (WiFi.status() != WL_CONNECTED) {
       delay(50);
       digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
@@ -80,7 +80,6 @@ void MiUI::wifi_mode_sta()
     Serial.println("Fail start Wi-Fi as STA mode!");
     Serial.println("Restart as AP mode");
 
-    // var("wifi", "AP");
     wifi_mode_ap();
   } else {
     Serial.println("");
@@ -91,20 +90,20 @@ void MiUI::wifi_mode_sta()
 
 void MiUI::wifi_scan()
 {
-  uint8_t wifi_cnt = param("wifi_cnt").toInt();
-  int n = WiFi.scanNetworks();
-  char* list_ssid[n + 1] = {}; 
+  // uint8_t wifi_cnt = param("wifi_cnt").toInt();
+  // int n = WiFi.scanNetworks();
+  // char* list_ssid[n + 1] = {}; 
 
-  if (wifi_cnt && n) {
-    for (int i = 0; i < n; ++i) {
-      list_ssid[i] = (char*) WiFi.SSID(i).c_str();
+  // if (wifi_cnt && n) {
+  //   for (int i = 0; i < n; ++i) {
+  //     list_ssid[i] = (char*) WiFi.SSID(i).c_str();
 
-      for (int i = 0; i < wifi_cnt; ++i) {
-        if (WiFi.SSID(i) == param("ssid_" + String(i))) {
-          var("ssid", WiFi.SSID(i).c_str());
-          var("passwd", param("passwd_" + String(i)));
-        }
-      }
-    }
-  }
+  //     for (int i = 0; i < wifi_cnt; ++i) {
+  //       if (WiFi.SSID(i) == param("ssid_" + String(i))) {
+  //         var("ssid", WiFi.SSID(i).c_str());
+  //         var("passwd", param("passwd_" + String(i)));
+  //       }
+  //     }
+  //   }
+  // }
 }

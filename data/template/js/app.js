@@ -1,8 +1,11 @@
 document.addEventListener('DOMContentLoaded', function () {
     var btnOpen = document.getElementsByClassName("btn-menu");
     var btnClose = document.getElementsByClassName("btn-close");
-    var sidebar = document.getElementById("sidebar");
+    var header = document.getElementById("header");
+    var subheader = document.getElementById("subheader");
     var content = document.getElementById("content");
+    var footer = document.getElementById("footer");
+    var sidebar = document.getElementById("sidebar");
     var sidebarLeft = sidebar.style.left;
     var formID = "page_form";
 
@@ -84,6 +87,10 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         content: function() {
             document.getElementsByTagName("title")[0].innerText = obj.app + ': ' + obj.menu[current_page];
+            header.innerText = obj.app;
+            subheader.innerText = "#" + obj.menu[current_page];
+            footer.getElementsByClassName("column")[0].innerText = obj.app;
+            footer.getElementsByClassName("column")[1].innerText = obj.by;
             formID = formID + "_" + current_page;
 
             var page_content = obj.content[current_page];
@@ -250,7 +257,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             setTimeout(function() {
                 block.remove();
-            }, 1500);
+            }, 1000);
         }
     };
 

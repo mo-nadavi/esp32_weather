@@ -40,6 +40,7 @@ class MiUI
         void btnCallback(String name, buttonCallback response);
         // html
         void app_name(String name);
+        void app_by(String text);
         void menu(String route, String name);
         void page();
         void text(String id, String label);

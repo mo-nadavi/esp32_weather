@@ -4,6 +4,28 @@ document.addEventListener('DOMContentLoaded', function () {
 	var formID = "page_form";
 
 	var minify = function (type, text) {
+		var Timer = function(callback, delay) {
+		    var timerId, start, remaining = delay;
+
+		    this.pause = function() {
+		        window.clearTimeout(timerId);
+		        remaining -= Date.now() - start;
+		        console.log(111);
+		    };
+
+		    this.resume = function() {
+		        start = Date.now();
+		        window.clearTimeout(timerId);
+		        timerId = window.setTimeout(callback, remaining);
+		    };
+
+		    this.resume();
+		};
+
+		var timer = new Timer(function () {
+			block.remove();
+		}, 1000, block);
+
 		var block = document.createElement("div");
 		block.className = "alert alert-" + type;
 		block.innerHTML = text;
@@ -14,17 +36,24 @@ document.addEventListener('DOMContentLoaded', function () {
 		btn.innerHTML = '<span>&times;</span>'
 		block.append(btn);
 		
-		document.getElementById("content").append(block);
-		block.style.opacity = 1;
+		document.getElementById("content").appendChild(block);
 		btn.addEventListener("click", function(e) {
 			e.preventDefault();
 
 			e.target.closest(".alert").remove();
 		});
 
-		setTimeout(function() {
-			block.remove();
-		}, 3000);
+		block.addEventListener("mouseover", function() {
+			timer.pause();
+		});
+
+		block.addEventListener("mouseout", function() {
+			timer.resume();
+		});
+
+		// setTimeout(function() {
+		// 	block.remove();
+		// }, 1000);
 	};
 
 	var eventHandlers = {
@@ -41,11 +70,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	document.getElementById("BTN_btnTest").addEventListener("click", function(e) {
 		e.preventDefault();
-		var els = document.getElementById(formID).elements;
+		// var els = document.getElementById(formID).elements;
 
-        for (i = 0; i < els.length; i++) {
-            els[i].disabled = true;
-        }
-		minify('default', 'Test!<br>Test test test <br>test');
+  //       for (i = 0; i < els.length; i++) {
+  //           els[i].disabled = true;
+  //       }
+		minify('success', 'OK!');
 	});
 });
