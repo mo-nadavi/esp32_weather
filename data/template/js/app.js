@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var sidebar = document.getElementById("sidebar");
     var content = document.getElementById("content");
     var sidebarLeft = sidebar.style.left;
+    var formID = "page_form";
 
     var json = "none";
     var current_page = 0;
@@ -39,14 +40,29 @@ document.addEventListener('DOMContentLoaded', function () {
             };
             xhr.send(null);
         },
-        send: function(id, value) {
+        send: function(id, value, el) {
             var formData = new FormData();
             var xhr = new XMLHttpRequest();
 
             formData.append(id, value);
             xhr.open('POST', '/post', true);
+            xhr.onprogress = function () {
+                // disabled target element
+                utils.toggleDisabled(true);
+            };
             xhr.onload = function () {
                 var res = xhr.responseText;
+
+                utils.toggleDisabled(false);
+
+                if (xhr.status === 200) {
+                    utils.minify('success', res);
+                } else {
+                    utils.minify('warning', res);
+                }
+            };
+            xhr.onerror = function (e) {
+                utils.minify('danger', xhr.statusText);
             };
             xhr.send(formData);
         },
@@ -68,9 +84,11 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         content: function() {
             document.getElementsByTagName("title")[0].innerText = obj.app + ': ' + obj.menu[current_page];
+            formID = formID + "_" + current_page;
 
             var page_content = obj.content[current_page];
             var form = document.createElement("form");
+            form.setAttribute("id", formID);
             var fieldset = document.createElement("fieldset");
 
             for (var i = 0; i < page_content.length; i++) {
@@ -176,7 +194,7 @@ document.addEventListener('DOMContentLoaded', function () {
             form.append(fieldset);
             content.innerHTML = form.outerHTML;
             // todo
-            form.addEventListener("submit", eventHandlers.form);
+            document.getElementById(formID).addEventListener("submit", eventHandlers.form);
 
             if (document.querySelectorAll('[jtype="click"]').length) {
                 document.querySelectorAll('[jtype="click"]').forEach(function(el) {
@@ -203,7 +221,37 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     var utils = {
-        toggleActive: function() {}
+        toggleActive: function() {},
+        toggleDisabled: function (status) {
+            var els = document.getElementById(formID).elements;
+
+            for (i = 0; i < els.length; i++) {
+                els[i].disabled = status;
+            }
+        },
+        minify: function (type, text) {
+            var block = document.createElement("div");
+            block.className = "alert alert-" + type;
+            block.innerHTML = text;
+
+            var btn = document.createElement("button");
+            btn.setAttribute("type", "button");
+            btn.className = "close button button-clear";
+            btn.innerHTML = '<span>&times;</span>'
+            block.append(btn);
+            
+            document.getElementById("content").append(block);
+            block.style.opacity = 1;
+            btn.addEventListener("click", function(e) {
+                e.preventDefault();
+
+                e.target.closest(".alert").remove();
+            });
+
+            setTimeout(function() {
+                block.remove();
+            }, 1500);
+        }
     };
 
     var eventHandlers = {
@@ -246,7 +294,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (el.getAttribute("jvalue")) value = el.getAttribute("jvalue");
             else value = document.getElementById(id).value;
 
-            actions.send(id, value);
+            actions.send(id, value, el);
         },
         form: function(e) {
             e.preventDefault();

@@ -27,6 +27,7 @@ body,
 	display: flex
 	flex-direction: column
 	flex-grow: 1
+
 #footer
 	border-top: $color_initial
 	padding: 20px
@@ -64,22 +65,23 @@ body,
 		background: rgba(0,0,21,.2)
 		text-transform: uppercase
 
-#sidebar 
-	a:hover
-		color: #fff
-		background: rgba(0,0,21,.1)
+	a
+		:hover
+			color: #fff
+			background: rgba(0,0,21,.1)
 
-	a.active
-		background: rgba(255,255,255,.05)
+		.active
+			background: rgba(255,255,255,.05)
 
-	a.active:before
-		content: ''
-		width: 3px
-		height: 100%
-		background-color: $color-primary
-		position: absolute
-		top: 0
-		left: 0
+		.active
+			:before
+				content: ''
+				width: 3px
+				height: 100%
+				background-color: $color-primary
+				position: absolute
+				top: 0
+				left: 0	
 
 .btn-close
 	position: absolute
@@ -109,13 +111,15 @@ body,
 		left: 0
 
 	#footer 
-		.column:first-child
-			text-align: left
+		.column
+			:first-child
+				text-align: left
 
-		.column:last-child
-			text-align: right
+			:last-child
+				text-align: right
 
-	.btn-menu, .btn-close
+	.btn-menu, 
+	.btn-close
 		display: none
 
 /* Form */
