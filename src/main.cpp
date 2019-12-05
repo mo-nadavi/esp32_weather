@@ -1,11 +1,14 @@
 #include <Arduino.h>
 #include <_secret.h>
 #include <MiUI.h>
+#include <OpenWeather.h>
 
 MiUI miui = MiUI();
 
 const char* ssid = WIFI_SSID;
 const char* passwd = WIFI_PASSWD;
+
+// OpenWeather open_weather = OpenWeather("67b6bff1964464654118e172e4e3a557");
 
 void interface();
 void btn();
@@ -14,10 +17,18 @@ void setup()
 {
   Serial.begin(115200);
 
-  miui.var("test_a", "");
+  miui.init();
+
   miui.var("ssid", ssid);
   miui.var("passwd", passwd);
   miui.var("wifi_mode", String(WIFI_STA));
+
+  miui.var("ow_api_key", "67b6bff1964464654118e172e4e3a557");
+  miui.var("ow_language", "ru");
+  miui.var("ow_units", "metric");
+  miui.var("ow_id", "703448");
+  miui.var("ow_refresh_rate", "10");
+  miui.var("ow_last_refresh", "");
 
   miui.begin();
   miui.ui(interface);
@@ -28,6 +39,7 @@ void loop()
 {
   // обработчик
   miui.handle();
+  // server.handleClient();
   // calbacks
   miui.btnCallback("btnTest", btn);
 }
@@ -46,31 +58,25 @@ void interface()
   // WiFi
   miui.page();
   miui.wifi_settings();
-  // miui.text_block("Подключенные сети");
-  // miui.text_block("Доступные сети");
-
-  // int n = WiFi.scanNetworks();
-
-  // if (n) {
-  //   for (int i = 0; i < n; ++i) {
-  //     miui.list_item(WiFi.SSID(i) + "   (" + String(WiFi.RSSI(i)) + " dBm)   " + ((WiFi.encryptionType(i) == WIFI_AUTH_OPEN) ? "" : "&#128274;"));
-  //   }
-
-  //   miui.list();
-  // }
-
   // Настройки
   miui.page();
-  miui.text_block("Настройки модуля");
-  miui.text("test_a", "Test field");
+  // miui.text_block("Настройки модуля");
+  miui.text("ow_api_key", "OpenWeather API Key");
+  miui.option("ua", "Украинский");
+  miui.option("en", "Английский");
+  miui.option("ru", "Русский");
+  miui.select("ow_language", "Язык денных в ответе");
+  miui.option("metric", "metric");
+  miui.option("imperial", "imperial");
+  miui.select("ow_units", "Единицы измерения");
+  miui.text("ow_id", "ID города");
+  miui.text("ow_refresh_rate", "Частота обновления данных (в минутах)");
   miui.button("btnTest", "", "btn test");
   // Конец контента
   miui.end();
 }
 
 void btn() {
-  static int cnt;
-  cnt++;
   digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
-  Serial.println("Btn " + String(cnt));
+  miui.response(digitalRead(LED_BUILTIN) ? "LED on" : "LED off");
 }

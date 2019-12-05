@@ -2,27 +2,6 @@
 
 AsyncWebServer server(80);
 
-// Меняем заглушку на текущее состояние светодиода:
-// String processor(const String& var)
-// {
-//   // Создаем переменную для хранения состояния светодиода:
-//   String ledState;
-
-//   if(var == "STATE") {
-//     if(digitalRead(LED_BUILTIN)) {
-//       ledState = "ON";
-//     } else {
-//       ledState = "OFF";
-//     }
-
-//     Serial.print(ledState);
-
-//     return ledState;
-//   }
-  
-//   return String();
-// }
-
 void MiUI::server_run()
 {
   // Инициализируем SPIFFS:
@@ -88,19 +67,28 @@ void MiUI::server_run()
   server.on("/post", HTTP_ANY, [this](AsyncWebServerRequest *request) {
     uint8_t params = request->params();
     AsyncWebParameter *param;
+    boolean processing = false;
+    unsigned long interval = millis();
 
     for (uint8_t i = 0; i < params; i++) {
       param = request->getParam(i);
 
       if (param->name().indexOf("BTN_") != -1) {
         btnui = param->name().substring(4, param->name().length());
+        processing = true;
       } else {
         var(param->name(), param->value());
         conf_as();
       }
     }
+
+    // if (processing) {
+    //   for () {
+
+    //   }
+    // }
     
-    request->send(200, "text/plain", "OK");
+    request->send(200, "text/plain", buf);
   });
 
   server.on("/load", HTTP_ANY, [this](AsyncWebServerRequest *request) { 
@@ -109,7 +97,23 @@ void MiUI::server_run()
     buf = "";
     Serial.println("ECHO RAM: " + String(ESP.getFreeHeap()));
   });
+
+  // server.onNotFound(server.send(404, "text/plain", "Not found"););
  
   // Запускаем сервер:
   server.begin();
+}
+
+void MiUI::response(String text)
+{
+  if (buf) {
+     buf += "\n" + text;
+  } else {
+     buf = text;
+  }
+}
+
+void MiUI::response(String key, String value)
+{
+  buf = "TODO";
 }

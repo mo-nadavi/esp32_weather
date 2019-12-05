@@ -7,7 +7,7 @@ void MiUI::app_name(String name)
 
 void MiUI::app_by(String text)
 {
-    buf = "{\"by\":\"" + text + "\",";
+    buf += "\"by\":\"" + text + "\",";
 }
 
 void MiUI::text(String id, String label)

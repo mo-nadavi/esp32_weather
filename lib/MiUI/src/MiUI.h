@@ -32,7 +32,7 @@ class MiUI
         uiCallback processor;
         void led(uint8_t pin);
         void var(String key, String value);
-        // void init();
+        void init();
         void begin();
         void debug();
         void ui(void (*uiFunction) ());
@@ -61,7 +61,11 @@ class MiUI
         void list(String tag = "ul");
         void hr(String text, String direction = "left");
         void wifi_settings();
+        // TODO блок по типу jtype=ready - который по указанному таймигу обновляет указанный текстовый блок
         void end();
+        // server
+        void response(String text);
+        void response(String key, String value);
 
     private:
         // config
@@ -76,6 +80,7 @@ class MiUI
         void non_wifi_var();
         void full_reset();
         // wifi
+        const char* ssid_ap = "ESP32_AP";
         String ssid;
         String passwd;
         String ssid_list;

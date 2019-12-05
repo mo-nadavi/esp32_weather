@@ -80,6 +80,11 @@ void MiUI::wifi_mode_sta()
     Serial.println("Fail start Wi-Fi as STA mode!");
     Serial.println("Restart as AP mode");
 
+    // default config for AP mode
+    var("wifi_mode", String(WIFI_AP));
+    var("ssid", ssid_ap);
+    var("passwd", ssid_ap);
+
     wifi_mode_ap();
   } else {
     Serial.println("");

@@ -43,16 +43,16 @@ void MiUI::debug()
   Serial.println("RAM: " + String(ESP.getFreeHeap()));
 }
 
-// void MiUI::init()
-// {
-//   conf_load();
-// }
+void MiUI::init()
+{
+  conf_load();
+}
 
 void MiUI::begin()
 {
   // full_reset();
   
-  conf_load();
+  // conf_load();
   non_wifi_var();
   wifi_connect();
   server_run();

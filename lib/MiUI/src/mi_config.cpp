@@ -1,7 +1,5 @@
 #include "MiUI.h"
 
-const char* ssid_ap = "ESP32_AP";
-
 void MiUI::conf_load()
 {
   if(!SPIFFS.begin(true)){
