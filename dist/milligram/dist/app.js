@@ -22,9 +22,9 @@ document.addEventListener('DOMContentLoaded', function () {
 		    this.resume();
 		};
 
-		var timer = new Timer(function () {
-			block.remove();
-		}, 1000, block);
+		// var timer = new Timer(function () {
+		// 	block.remove();
+		// }, 1000, block);
 
 		var block = document.createElement("div");
 		block.className = "alert alert-" + type;

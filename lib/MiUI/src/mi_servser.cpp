@@ -20,33 +20,11 @@ void MiUI::server_run()
     request->send(SPIFFS, "/template/favicon.ico", "image/x-icon", false);
   });
 
-  // URL для файла «style.css»:
   server.on("/css/mg.min.css", HTTP_ANY, [](AsyncWebServerRequest *request){
     AsyncWebServerResponse *response = request->beginResponse(SPIFFS, "/template/css/mg.min.css.gz", "text/css");
     response->addHeader("Content-Encoding", "gzip");
     request->send(response);
   });
-
-  // URL для файла «style.css»:
-  // server.on("/css/grids-min.css", HTTP_ANY, [](AsyncWebServerRequest *request){
-  //   AsyncWebServerResponse *response = request->beginResponse(SPIFFS, "/template/css/grids-min.css.gz", "text/css");
-  //   response->addHeader("Content-Encoding", "gzip");
-  //   request->send(response);
-  // });
-
-  // URL для файла «style.css»:
-  // server.on("/css/side-menu.css", HTTP_ANY, [](AsyncWebServerRequest *request){
-  //   AsyncWebServerResponse *response = request->beginResponse(SPIFFS, "/template/css/side-menu.css.gz", "text/css");
-  //   response->addHeader("Content-Encoding", "gzip");
-  //   request->send(response);
-  // });
-
-  // URL для файла ui.js:
-  // server.on("/js/ui.js", HTTP_ANY, [](AsyncWebServerRequest *request){
-  //   AsyncWebServerResponse *response = request->beginResponse(SPIFFS, "/template/js/ui.js.gz", "application/javascript");
-  //   response->addHeader("Content-Encoding", "gzip");
-  //   request->send(response);
-  // });
 
   server.on("/js/app.js", HTTP_ANY, [](AsyncWebServerRequest *request){   
     request->send(SPIFFS, "/template/js/app.js", "application/javascript");
@@ -98,7 +76,9 @@ void MiUI::server_run()
     Serial.println("ECHO RAM: " + String(ESP.getFreeHeap()));
   });
 
-  // server.onNotFound(server.send(404, "text/plain", "Not found"););
+  server.onNotFound([this](AsyncWebServerRequest *request) {
+    request->send(404, "text/plain", "Not found");
+  });
  
   // Запускаем сервер:
   server.begin();
