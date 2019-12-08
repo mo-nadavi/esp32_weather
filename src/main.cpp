@@ -12,6 +12,7 @@ const char* passwd = WIFI_PASSWD;
 
 void interface();
 void btn();
+void callbacks();
 
 void setup() 
 {
@@ -30,6 +31,7 @@ void setup()
   miui.var("ow_refresh_rate", "10");
   miui.var("ow_last_refresh", "");
 
+  miui.setCallback(callbacks);
   miui.begin();
   miui.ui(interface);
   miui.debug();
@@ -41,7 +43,7 @@ void loop()
   miui.handle();
   // server.handleClient();
   // calbacks
-  miui.btnCallback("btnTest", btn);
+  // miui.btnCallback("btnTest", btn);
 }
 
 void interface()
@@ -74,6 +76,11 @@ void interface()
   miui.button("btnTest", "", "btn test");
   // Конец контента
   miui.end();
+}
+
+void callbacks()
+{
+  miui.btnCallback("btnTest", btn);
 }
 
 void btn() {

@@ -63,6 +63,11 @@ void MiUI::ui(void (*uiFunction) ())
   processor = uiFunction;
 }
 
+void MiUI::setCallback(uiCallback _callback)
+{
+  callback = _callback;
+}
+
 void MiUI::handle()
 {
   static unsigned long timer;

@@ -67,15 +67,15 @@ void MiUI::server_run()
   server.on("/post", HTTP_ANY, [this](AsyncWebServerRequest *request) {
     uint8_t params = request->params();
     AsyncWebParameter *param;
-    boolean processing = false;
-    unsigned long interval = millis();
+    String buf_;
 
     for (uint8_t i = 0; i < params; i++) {
       param = request->getParam(i);
 
       if (param->name().indexOf("BTN_") != -1) {
         btnui = param->name().substring(4, param->name().length());
-        processing = true;
+        // processing = true;
+        callback();
       } else {
         var(param->name(), param->value());
         conf_as();
@@ -83,12 +83,19 @@ void MiUI::server_run()
     }
 
     // if (processing) {
-    //   for () {
+    //   while (!buf.length()) {
 
+    //     if (interval + 10000 < millis()) {
+    //       request->send(202, "text/plain", "error");
+    //       break;
+    //     }
     //   }
     // }
+
+    buf_ = buf;
+    buf = "";
     
-    request->send(200, "text/plain", buf);
+    request->send(200, "text/plain", buf_);
   });
 
   server.on("/load", HTTP_ANY, [this](AsyncWebServerRequest *request) { 

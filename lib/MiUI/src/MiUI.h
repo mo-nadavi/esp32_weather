@@ -23,13 +23,15 @@
 class MiUI
 {
     typedef void (*uiCallback) ();
+    typedef void (*uiFunction) ();
     typedef void (*buttonCallback) ();
 
     public:
         // construct
         MiUI();
         String param(String key);
-        uiCallback processor;
+        uiFunction processor;
+        uiCallback callback;
         void led(uint8_t pin);
         void var(String key, String value);
         void init();
@@ -38,6 +40,7 @@ class MiUI
         void ui(void (*uiFunction) ());
         void handle();
         void btnCallback(String name, buttonCallback response);
+        void setCallback(uiCallback callback);
         // html
         void app_name(String name);
         void app_by(String text);
