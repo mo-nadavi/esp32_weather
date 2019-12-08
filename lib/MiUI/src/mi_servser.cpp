@@ -29,18 +29,6 @@ void MiUI::server_run()
   server.on("/js/app.js", HTTP_ANY, [](AsyncWebServerRequest *request){   
     request->send(SPIFFS, "/template/js/app.js", "application/javascript");
   });
- 
-  // URL для переключения GPIO-контакта на «HIGH»:
-  // server.on("/on", HTTP_GET, [](AsyncWebServerRequest *request){
-  //   digitalWrite(LED_BUILTIN, HIGH);    
-  //   request->send(SPIFFS, "/template/index.html", String(), false, processor);
-  // });
- 
-  // URL для переключения GPIO-контакта на «LOW»:
-  // server.on("/off", HTTP_GET, [](AsyncWebServerRequest *request){
-  //   digitalWrite(LED_BUILTIN, LOW);    
-  //   request->send(SPIFFS, "/template/index.html", String(), false, processor);
-  // });
 
   server.on("/post", HTTP_ANY, [this](AsyncWebServerRequest *request) {
     uint8_t params = request->params();
@@ -52,23 +40,13 @@ void MiUI::server_run()
 
       if (param->name().indexOf("BTN_") != -1) {
         btnui = param->name().substring(4, param->name().length());
-        // processing = true;
         callback();
       } else {
         var(param->name(), param->value());
         conf_as();
+        handle();
       }
     }
-
-    // if (processing) {
-    //   while (!buf.length()) {
-
-    //     if (interval + 10000 < millis()) {
-    //       request->send(202, "text/plain", "error");
-    //       break;
-    //     }
-    //   }
-    // }
 
     buf_ = buf;
     buf = "";

@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             formData.append(id, value);
             xhr.open('POST', '/post', true);
-            xhr.onprogress = function () {
+            xhr.onloadstart = function () {
                 // disabled target element
                 utils.toggleDisabled(true);
             };

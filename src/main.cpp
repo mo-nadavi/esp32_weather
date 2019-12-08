@@ -12,7 +12,7 @@ const char* passwd = WIFI_PASSWD;
 
 void interface();
 void btn();
-void callbacks();
+void btnA();
 
 void setup() 
 {
@@ -31,7 +31,11 @@ void setup()
   miui.var("ow_refresh_rate", "10");
   miui.var("ow_last_refresh", "");
 
-  miui.setCallback(callbacks);
+  miui.setCallback([]() {
+    miui.btnCallback("btnTest", btn);
+    miui.btnCallback("btnA", btnA);
+  });
+
   miui.begin();
   miui.ui(interface);
   miui.debug();
@@ -40,7 +44,7 @@ void setup()
 void loop() 
 {
   // обработчик
-  miui.handle();
+  // miui.handle();
   // server.handleClient();
   // calbacks
   // miui.btnCallback("btnTest", btn);
@@ -74,16 +78,19 @@ void interface()
   miui.text("ow_id", "ID города");
   miui.text("ow_refresh_rate", "Частота обновления данных (в минутах)");
   miui.button("btnTest", "", "btn test");
+  miui.button("btnA", "", "Test A");
   // Конец контента
   miui.end();
 }
 
-void callbacks()
+void btn() 
 {
-  miui.btnCallback("btnTest", btn);
-}
-
-void btn() {
   digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
   miui.response(digitalRead(LED_BUILTIN) ? "LED on" : "LED off");
+}
+
+void btnA()
+{
+  delay(500);
+  miui.response("Test A!");
 }

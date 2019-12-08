@@ -82,6 +82,7 @@ void MiUI::handle()
   // btn();
   // led_handle();
   conf_autosave();
+  response(do_save ? "Not save!" : "Save!");
 }
 
 void MiUI::btnCallback(String name, buttonCallback response)
