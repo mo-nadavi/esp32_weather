@@ -43,7 +43,6 @@ void MiUI::server_run()
         callback();
       } else {
         var(param->name(), param->value());
-        conf_as();
         handle();
       }
     }
@@ -55,7 +54,7 @@ void MiUI::server_run()
   });
 
   server.on("/load", HTTP_ANY, [this](AsyncWebServerRequest *request) { 
-    processor();
+    interface();
     request->send(200, "text/plain", buf);
     buf = "";
     Serial.println("ECHO RAM: " + String(ESP.getFreeHeap()));

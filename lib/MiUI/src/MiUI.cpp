@@ -51,8 +51,6 @@ void MiUI::init()
 void MiUI::begin()
 {
   // full_reset();
-  
-  // conf_load();
   non_wifi_var();
   wifi_connect();
   server_run();
@@ -60,7 +58,7 @@ void MiUI::begin()
 
 void MiUI::ui(void (*uiFunction) ())
 {
-  processor = uiFunction;
+  interface = uiFunction;
 }
 
 void MiUI::setCallback(uiCallback _callback)
@@ -81,8 +79,8 @@ void MiUI::handle()
 
   // btn();
   // led_handle();
-  conf_autosave();
-  response(do_save ? "Not save!" : "Save!");
+  conf_save();
+  response(save_result > 0 ? "Save" : "Not Save");
 }
 
 void MiUI::btnCallback(String name, buttonCallback response)

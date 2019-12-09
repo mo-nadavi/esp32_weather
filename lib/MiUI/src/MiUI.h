@@ -29,9 +29,9 @@ class MiUI
     public:
         // construct
         MiUI();
-        String param(String key);
-        uiFunction processor;
+        uiFunction interface;
         uiCallback callback;
+        String param(String key);
         void led(uint8_t pin);
         void var(String key, String value);
         void init();
@@ -72,14 +72,10 @@ class MiUI
 
     private:
         // config
-        bool do_save = false;
-        unsigned long avto_save_timer;
-        unsigned int asave = 1000; // ?
+        size_t save_result;
         String config = "{}";
         void conf_load();
         void conf_save();
-        void conf_autosave();
-        void conf_as();
         void non_wifi_var();
         void full_reset();
         // wifi
