@@ -40,10 +40,11 @@ void MiUI::server_run()
 
       if (param->name().indexOf("BTN_") != -1) {
         btnui = param->name().substring(4, param->name().length());
-        callback();
+        btn_callback();
       } else {
         var(param->name(), param->value());
         handle();
+        save_callback(param->name());
       }
     }
 

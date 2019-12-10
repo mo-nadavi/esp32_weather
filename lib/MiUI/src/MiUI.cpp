@@ -31,7 +31,7 @@ void MiUI::var(String key, String value)
   JsonObject obj = doc.as<JsonObject>();
   obj[key] = value;
   Serial.print("WRITE: ");
-  Serial.println("key (" + key + ") value (" + value.substring(0, 15) + ")");
+  Serial.println("key (" + key + ") value (" + value + ")");
   serializeJson(doc, result);
   config = result;
 }
@@ -61,9 +61,14 @@ void MiUI::ui(void (*uiFunction) ())
   interface = uiFunction;
 }
 
-void MiUI::setCallback(uiCallback _callback)
+void MiUI::setCallback(void (*uiCallback) ())
 {
-  callback = _callback;
+  btn_callback = uiCallback;
+}
+
+void MiUI::setCallback(void (*saveCallback) (String name))
+{
+  save_callback = saveCallback;
 }
 
 void MiUI::handle()
@@ -94,4 +99,9 @@ void MiUI::btnCallback(String name, buttonCallback response)
     btnui = "";
     response();
   }
+}
+
+void MiUI::saveCallback(String name, paramCallback s_response)
+{  
+  s_response(name);
 }

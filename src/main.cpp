@@ -13,6 +13,7 @@ const char* passwd = WIFI_PASSWD;
 void interface();
 void btn();
 void btnA();
+void after_save(String name);
 
 void setup() 
 {
@@ -34,6 +35,10 @@ void setup()
   miui.setCallback([]() {
     miui.btnCallback("btnTest", btn);
     miui.btnCallback("btnA", btnA);
+  });
+
+  miui.setCallback([](String name) {
+    miui.saveCallback(name, after_save);
   });
 
   miui.begin();
@@ -93,4 +98,10 @@ void btnA()
 {
   delay(500);
   miui.response("Test A!");
+}
+
+void after_save(String name)
+{
+
+  Serial.println(name + ": " + miui.param(name));
 }
