@@ -16,8 +16,20 @@ class OpenWeather
 {
   public:
     // construct
-    OpenWeather(char* apikey);
+    OpenWeather();
     // properties
+    String url;
+    struct option_struct {
+      String api_key;
+      String lang;
+      String units;
+      String q;
+      unsigned int id;
+      String zip;
+      float lat;
+      float lon;
+      String appid;
+    } option;
     struct weather_structure {
       unsigned int weather_id;        // Идентификатор погодного условия
       const char* weather_main;       // Группа параметров погоды (дождь, снег, экстрим и т.д.)
@@ -41,14 +53,9 @@ class OpenWeather
       unsigned int sunrise;       // Время восхода, Unix, UTC
       unsigned int sunset;        // Время заката, Unix, UTC
       unsigned int dt;            // Время расчета данных, Unix, UTC
+      const char* city;           // Название города
     } weather;
     // methods
-    void set_language(char* language);
-    void set_units(char* units);
-    void set_q(char* q);
-    void set_id(unsigned int id);
-    void set_zip(char* zip);
-    void set_coordinates(float lat, float lon);
     bool current();
     bool forecast();
     bool forecast_daily();
@@ -56,21 +63,9 @@ class OpenWeather
 
   private:
     // properties
-    const char* _api_key;
-    String _url;
     String _query_option; 
     String _error;
     String _data;
-    struct option_struct {
-      const char* lang;
-      const char* units;
-      const char* q;
-      unsigned int id;
-      const char* zip;
-      float lat;
-      float lon;
-      const char* appid;
-    } _option;
     // methods
     void build_query_params();
     void request(String action);

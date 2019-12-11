@@ -35,6 +35,7 @@ class MiUI
         uiCallback btn_callback;
         handlCallback save_callback;
         String param(String key);
+        String param(String key, String def_val);
         void led(uint8_t pin);
         void var(String key, String value);
         void init();

@@ -5,49 +5,9 @@
 #include <ArduinoJson.h>
 
 // construct
-OpenWeather::OpenWeather(char* apikey)
+OpenWeather::OpenWeather()
 {
-    _api_key = apikey;
-    _url = "http://api.openweathermap.org/data/2.5/";
-}
-
-// public methods
-
-void OpenWeather::set_language(char* language)
-{
-    // например: ru, en ...
-    _option.lang = language;
-}
-
-void OpenWeather::set_units(char* units)
-{
-    // допустимые значения: imperial, metric
-    _option.units = units;
-}
-
-void OpenWeather::set_q(char* q)
-{
-    // q={city name}
-    // q={city name},{country code}
-    _option.q = q;
-}
-
-void OpenWeather::set_id(unsigned int id)
-{
-    _option.id = id;
-}
-
-void OpenWeather::set_zip(char* zip)
-{
-    // zip={zip code},{country code}
-    _option.zip = zip;
-}
-
-void OpenWeather::set_coordinates(float lat, float lon)
-{
-    // lat={lat}&lon={lon}
-    _option.lat = lat;
-    _option.lon = lon;
+    url = "http://api.openweathermap.org/data/2.5/";
 }
 
 bool OpenWeather::current()
@@ -81,14 +41,14 @@ String OpenWeather::get_error()
 void OpenWeather::build_query_params()
 {
     _query_option = "";
-    _query_option += _option.lang ? "&lang=" + String(_option.lang) : "";
-    _query_option += _option.units ? "&units=" + String(_option.units) : "";
-    _query_option += _option.q ? "&q=" + String(_option.q) : "";
-    _query_option += _option.id ? "&id=" + String(_option.id) : "";
-    _query_option += _option.zip ? "&zip=" + String(_option.zip) : "";
-    _query_option += _option.lat ? "&lat=" + String(_option.lat, 6) : "";
-    _query_option += _option.lon ? "&lon=" + String(_option.lon, 6) : "";
-    _query_option += _api_key ? "&appid=" + String(_api_key) : "";
+    _query_option += option.lang ? "&lang=" + option.lang : "";
+    _query_option += option.units ? "&units=" + option.units : "";
+    _query_option += option.q ? "&q=" + option.q : "";
+    _query_option += option.id ? "&id=" + String(option.id) : "";
+    _query_option += option.zip ? "&zip=" + option.zip : "";
+    _query_option += option.lat ? "&lat=" + String(option.lat, 6) : "";
+    _query_option += option.lon ? "&lon=" + String(option.lon, 6) : "";
+    _query_option += option.api_key ? "&appid=" + option.api_key : "";
 
     _query_option = "?" + _query_option.substring(1);
 }
@@ -101,7 +61,7 @@ void OpenWeather::request(String action)
 
     // configure traged server and url
     //http.begin("https://***", ca); //HTTPS
-    http.begin(_url + action + _query_option);
+    http.begin(url + action + _query_option);
     // start connection and send HTTP header
     int http_code = http.GET();
 
@@ -110,6 +70,7 @@ void OpenWeather::request(String action)
         // file found at server
         if (http_code == HTTP_CODE_OK) {
             _data = http.getString();
+            _error = "";
         } else {
             _error = "File not found at server";
         }
@@ -128,7 +89,16 @@ bool OpenWeather::parse_data()
 
     // DynamicJsonBuffer jsonBuffer;
     // JsonObject& data = jsonBuffer.parseObject(_data);
-    DynamicJsonDocument data(2000);
+    // DynamicJsonDocument data(5000);
+    // DeserializationError error = deserializeJson(data, _data);
+
+    // DynamicJsonDocument data(10000);
+    // deserializeJson(data, _data);
+    // DeserializationError error = deserializeJson(data, _data);
+
+    StaticJsonDocument<2048> data;
+
+    // Deserialize the JSON document
     DeserializationError error = deserializeJson(data, _data);
 
     if (error) {
@@ -142,8 +112,8 @@ bool OpenWeather::parse_data()
     //     _error = data["message"];
     // }
 
-    // Serial.println(_data);
-    // Serial.println(_url + "weather" + _query_option);
+    Serial.println(_data);
+    Serial.println(url + "weather" + _query_option);
     // Serial.println(error.c_str());
 
     // int cod = data["cod"];
@@ -170,6 +140,7 @@ bool OpenWeather::parse_data()
     weather.sunrise    = data["sys"]["sunrise"];
     weather.sunset     = data["sys"]["sunset"];
     weather.dt         = data["dt"];
+    weather.city       = data["name"]; 
 
     _data = "";
 

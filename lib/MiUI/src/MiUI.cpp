@@ -23,6 +23,17 @@ String MiUI::param(String key)
   //serializeJson(doc, config);
 } 
 
+String MiUI::param(String key, String def_val)
+{
+  String value = param(key);
+
+  if (value.length()) {
+    return value;
+  } else {
+    return def_val;
+  }
+} 
+
 void MiUI::var(String key, String value) 
 { 
   DynamicJsonDocument doc(10000);
